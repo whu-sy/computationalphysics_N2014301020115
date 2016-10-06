@@ -14,4 +14,4 @@
 链接：[github](https://github.com/whu-sy/computationalphysics_N2014301020115/blob/master/reports/E3.md)
 
 * [x] 练习四：原子核转化(P16 1.5)  
-链接：[作业部落]()
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/522434)
