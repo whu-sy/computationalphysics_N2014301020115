@@ -15,3 +15,6 @@
 
 * [x] 练习四：原子核转化(P16 1.5)  
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/522434)
+
+* [x] 练习五：咻\~~~~轰！(P31 2.9)    
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/533224)
