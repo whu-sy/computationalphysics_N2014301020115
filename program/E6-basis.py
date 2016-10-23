@@ -56,9 +56,8 @@ class show_results:
         line_range = [self.x[-1] - 0.5, self.x[-1] + 0.5]
         pl.plot(line_range, line, 'k')
         pl.plot(self.x, self.y, label = "%.1f °"%self.init_theta)
-        pl.draw()
         pl.legend(loc = 6, ncol = 1, title = 'Angle:', bbox_to_anchor = (1, 0.5))
-        pl.show()
+        pl.draw()
         print("\n初速度：", user_input.init_v, "m/s")
         print("计算间隔：", user_input.time_step, "s")
         print("发射角度：", self.init_theta, "°")
@@ -78,13 +77,16 @@ class user_output:
     start = cannon_shell()
     show_results.show_results_1(start)
     while(True):
-        init_theta = float(input("--------------\n输入初始角度（角度制，0~180）:\n"))
-        start = cannon_shell(user_input.init_v, init_theta, user_input.time_step, user_input.target_altitude, user_input.wind_speeed)
-        start.launch()
-        if not high_enough:
-            print("\n该角度无法射到靶所在的高度\n")
+        init_theta = float(input("--------------\n输入初始角度（角度制，0~180）（输入999结束计算）:\n"))
+        if init_theta != 999:
+            start = cannon_shell(user_input.init_v, init_theta, user_input.time_step, user_input.target_altitude, user_input.wind_speeed)
+            start.launch()
+            if not high_enough:
+                print("\n该角度无法射到靶所在的高度\n")
+            else:
+                show_results.show_results_2(start)
         else:
-            show_results.show_results_2(start)
+            break
 
 #运行程序
 user_input()
