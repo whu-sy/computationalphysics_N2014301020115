@@ -23,4 +23,4 @@
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/540944)
 
 * [ ] 练习七：单摆：我混沌了？！(P65 3.12-3.14)   
-链接：[作业部落](https://www.zybuluo.com/whu-sy/note/666666)
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/549559)
