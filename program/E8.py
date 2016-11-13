@@ -20,7 +20,7 @@ class Bifurcation_diagram:
         n = 1
         self.tmp_theta = []
         self.tmp_F_D = []
-        m = 100000
+        m = 300000
         self.total_time = 2 * 400 * math.pi / self.Omega_D
         self.dt = self.total_time / m
         for i in range(m + 1):
@@ -32,27 +32,31 @@ class Bifurcation_diagram:
             if self.theta[i + 1] > math.pi:
                 self.theta[i + 1] = self.theta[i + 1] - 2 * math.pi
             #$\Omega_Dt=2n\pi$
-            if  abs(self.t[i + 1] - 2 * n * math.pi / self.Omega_D) < self.dt / 2 :
-                if i > 75000:
-                    if round(self.theta[-1], 4) not in self.tmp_theta:
-                        self.tmp_theta.append(round(self.theta[-1], 4))
+            if  abs(self.t[i + 1] - 2 * n * math.pi / self.Omega_D) < (self.dt / 2):
+                if i > m * 3/4:
+                    if round(self.theta[-1], 10) not in self.tmp_theta:
+                        self.tmp_theta.append(round(self.theta[-1], 10))
                         self.tmp_F_D.append(self.F_D)
                 n += 1
+
 bif_F_D = []
 bif_theta = []
 len_bif_theta = 0
 F_k = []
 k = []
 loop_i = True
-step = 300
+F_D_start = 1.455#给定扫描区间及步长
+F_D_end = 1.46
+step = 10
 for i in range(step + 1):
-    F_D = round(1.35 + 0.15 / step * i, 4)
+    F_D = F_D_start + (F_D_end - F_D_start) / step * i
     start = Bifurcation_diagram(F_D)
     start.calculate()
     bif_F_D += start.tmp_F_D
     bif_theta += start.tmp_theta
     print(start.tmp_theta, i, "/", step)
     temp_len_bif_theta = len(start.tmp_theta)
+    print(temp_len_bif_theta)
     if len_bif_theta != temp_len_bif_theta:
         F_k.append(F_D)
         k.append(temp_len_bif_theta)
@@ -61,6 +65,14 @@ pl.plot(bif_F_D, bif_theta, 'k.')
 pl.xlabel('$F_D$', fontsize=20)
 pl.ylabel('$\\theta$(radians)', fontsize=20)
 pl.title('$\\theta$ versus $F_D$', fontsize=20)
-pl.show()
+
 for i in range(len(F_k)):
     print("F_k, k的值:", F_k[i], ",", k[i])
+    
+myfile = open('E8_data.txt', 'w')
+for i in range(len(F_k)):
+    print(F_k[i], k[i], file = myfile)
+myfile.close()
+
+pl.show()
+#a = input()
