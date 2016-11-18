@@ -27,3 +27,6 @@
 
 * [x] 练习八：单摆：我分叉了？！(P70 3.18-3.21/1)   
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/564525)
+
+* [ ] 练习八：小球：砰砰砰！(P88 3.30-3.32/1)   
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/572123)
