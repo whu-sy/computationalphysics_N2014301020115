@@ -6,11 +6,13 @@ import pylab as pl
 
 class billiaro_collision_square:
     #初始化
-    def __init__(self, x = 0, y = 0, vx = 1.13, vy = 1, total_time = 100):
+    def __init__(self, x = 0, y = 0, vx = 1.735, vy = 1, total_time = 100):
         self.x = [x]
         self.y = [y]
         self.vx = vx
         self.vy = vy
+        self.ps_x = []
+        self.ps_vx = []
         self.total_road = total_time * math.hypot(vx, vy)
         self.passed_road = [0]
         print("\n小球的横向与纵向的分速度分别为：", self.vx, self.vy)
@@ -122,14 +124,26 @@ class billiaro_collision_square:
             #经过的路程恰好等于总路程
             if self.passed_road[-1] == self.total_road:
                 loop_calculate = False
-    #画图
+            #记录Poincare section的数据
+            if self.y[-1] * self.y[-2] < 0:
+                self.ps_vx.append(self.vx)
+                self.ps_x.append(self.x[-2] + (self.x[-1] - self.x[-2]) * (0 - self.y[-2]) / (self.y[-1] - self.y[-2]))
+    #画碰撞轨迹图
     def show_result(self):
-        pl.title('Trajectory of a billiard on a square table')
-        pl.xlabel('x')
-        pl.ylabel('y')
+        pl.title('Trajectory of a billiard on a square table', fontsize=20)
+        pl.xlabel('x', fontsize=20)
+        pl.ylabel('y', fontsize=20)
         pl.xlim(-1, 1)
         pl.ylim(-1, 1)
         pl.plot(self.x, self.y)
+        pl.show()
+    #画Poincare section图
+    def show_result_ps(self):
+        pl.title('Poincare section $v_x$ versus x', fontsize=20)
+        pl.xlabel('x', fontsize=20)
+        pl.ylabel('$v_x$', fontsize=20)
+        pl.xlim(-1, 1)
+        pl.plot(self.ps_x, self.ps_vx, '.')
         pl.show()
 
 num_str_in = input("请输入小球初始位置的横、纵坐标x、y，小球初始速度的横、纵分量vx、vy，运动持续时间t的值,并用空格隔开:\n")
@@ -142,3 +156,9 @@ total_time = num[4]
 start = billiaro_collision_square(x, y, vx, vy, total_time)
 start.calculate()
 start.show_result()
+start.show_result_ps()
+
+#start = billiaro_collision_square()
+#start.calculate()
+#start.show_result()
+#start.show_result_ps()
