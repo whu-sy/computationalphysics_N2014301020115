@@ -6,7 +6,8 @@ import pylab as pl
 
 class billiaro_collision_square:
     #初始化
-    def __init__(self, x = 0, y = 0, vx = 1.735, vy = 1, total_time = 20):
+    def __init__(self, x = 0.2, y = 0, vx = 1.2, vy = 1.332, l = 1, total_time = 100):
+        self.l = l
         self.x = [x]
         self.y = [y]
         self.vx = vx
@@ -23,94 +24,94 @@ class billiaro_collision_square:
         loop_calculate = True
         while(loop_calculate):
             k = self.vy / self.vx
-            b = self.y[-1] - self.x[-1] * k
+            m = self.y[-1] - self.x[-1] * k
             temp_vx = self.vx
             #匀速直线运动部分（循环）
             while(True):
                 #速度方向垂直于y轴时
                 if self.vx == 0 and self.vy > 0:
                     self.x.append(self.x[-1])
-                    self.y.append(1)
+                    self.y.append(self.l)
                     self.vy = -self.vy
                     break
                 #速度方向垂直于y轴时
                 if self.vx == 0 and self.vy < 0:
                     self.x.append(self.x[-1])
-                    self.y.append(-1)
+                    self.y.append(-self.l)
                     self.vy = -self.vy
                     break
                 #速度方向在第一象限
                 if self.vx > 0 and self.vy >= 0:
                     #以小球位置与墙壁拐角处连线把第一象限分成两部分，速度在逆时针方向的前一半
-                    if k < (1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.y.append(k + b)
-                        self.x.append(1)
+                    if k < (self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.y.append(self.l * k + m)
+                        self.x.append(self.l)
                         self.vx = -self.vx
                         break
                     #以小球位置与墙壁拐角处连线把第一象限分成两部分，速度在逆时针方向的后一半
-                    if k > (1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append((1 - b) * self.vx / self.vy)
-                        self.y.append(1)
+                    if k > (self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.x.append((self.l - m) * self.vx / self.vy)
+                        self.y.append(self.l)
                         self.vy = -self.vy
                         break
                     #速度与小球位置与墙壁拐角处连线的方向重合
-                    if k == (1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append(1)
-                        self.y.append(1)
+                    if k == (self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.x.append(self.l)
+                        self.y.append(self.l)
                         self.vx = -self.vx
                         self.vy = -self.vy
                         break
                 #速度方向在第二象限
                 if self.vx < 0 and self.vy >= 0:
-                    if k < (1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append((1 - b) / k)
-                        self.y.append(1)
+                    if k < (self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.x.append((self.l - m) / k)
+                        self.y.append(self.l)
                         self.vy = -self.vy
                         break
-                    if k > (1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.y.append(-k + b)
-                        self.x.append(-1)
+                    if k > (self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.y.append(-k * self.l + m)
+                        self.x.append(-self.l)
                         self.vx = -self.vx
                         break
-                    if k == (1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append(-1)
-                        self.y.append(1)
+                    if k == (self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.x.append(-self.l)
+                        self.y.append(self.l)
                         self.vx = -self.vx
                         self.vy = -self.vy
                         break
                 #速度方向在第三象限
                 if self.vx < 0 and self.vy <= 0:
-                    if k < (-1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.y.append(-k + b)
-                        self.x.append(-1)
+                    if k < (-self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.y.append(-k * self.l + m)
+                        self.x.append(-self.l)
                         self.vx = -self.vx
                         break
-                    if k > (-1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append((-1 - b) / k)
-                        self.y.append(-1)
+                    if k > (-self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.x.append((-self.l - m) / k)
+                        self.y.append(-self.l)
                         self.vy = -self.vy
                         break
-                    if k == (-1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append(-1)
-                        self.y.append(-1)
+                    if k == (-self.l - self.y[-1]) / (-self.l - self.x[-1]):
+                        self.x.append(-self.l)
+                        self.y.append(-self.l)
                         self.vx = -self.vx
                         self.vy = -self.vy
                         break
                 #速度方向在第四象限
                 if self.vx > 0 and self.vy <= 0:
-                    if k < (-1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append((-1 - b) / k)
-                        self.y.append(-1)
+                    if k < (-self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.x.append((-self.l - m) / k)
+                        self.y.append(-self.l)
                         self.vy = -self.vy
                         break
-                    if k > (-1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.y.append(k + b)
-                        self.x.append(1)
+                    if k > (-self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.y.append(k * self.l + m)
+                        self.x.append(self.l)
                         self.vx = -self.vx
                         break
-                    if k == (-1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append(1)
-                        self.y.append(-1)
+                    if k == (-self.l - self.y[-1]) / (self.l - self.x[-1]):
+                        self.x.append(self.l)
+                        self.y.append(-self.l)
                         self.vx = -self.vx
                         self.vy = -self.vy
                         break
@@ -136,32 +137,34 @@ class billiaro_collision_square:
         pl.title('Trajectory of a billiard on a square table', fontsize=20)
         pl.xlabel('x', fontsize=20)
         pl.ylabel('y', fontsize=20)
-        pl.xlim(-1, 1)
-        pl.ylim(-1, 1)
+        pl.xlim(-self.l, self.l)
+        pl.ylim(-self.l, self.l)
         pl.plot(self.x, self.y)
+        pl.plot(self.x[0], self.y[0], 'o')
         pl.show()
     #画Poincare section图
     def show_result_ps(self):
         pl.title('Poincare section $v_x$ versus x', fontsize=20)
         pl.xlabel('x', fontsize=20)
         pl.ylabel('$v_x$', fontsize=20)
-        pl.xlim(-1, 1)
+        pl.xlim(-self.l, self.l)
         pl.plot(self.ps_x, self.ps_vx, '.')
         pl.show()
 
-num_str_in = input("请输入小球初始位置的横、纵坐标x、y，小球初始速度的横、纵分量vx、vy，运动持续时间t的值,并用空格隔开:\n")
-num = [float(n) for n in num_str_in.split()]
-x = num[0]
-y = num[1]
-vx = num[2]
-vy = num[3]
-total_time = num[4]
-start = billiaro_collision_square(x, y, vx, vy, total_time)
-start.calculate()
-start.show_result()
-start.show_result_ps()
-
-#start = billiaro_collision_square()
+#num_str_in = input("请输入小球初始位置的横、纵坐标x、y，小球初始速度的横、纵分量vx、vy，半边长l，运动持续时间t的值,并用空格隔开:\n")
+#num = [float(n) for n in num_str_in.split()]
+#x = num[0]
+#y = num[1]
+#vx = num[2]
+#vy = num[3]
+#l = num[4]
+#total_time = num[5]
+#start = billiaro_collision_square(x, y, vx, vy, l, total_time)
 #start.calculate()
 #start.show_result()
 #start.show_result_ps()
+
+start = billiaro_collision_square()
+start.calculate()
+start.show_result()
+start.show_result_ps()
