@@ -23,7 +23,8 @@ class billiaro_collision_square:
         loop_calculate = True
         while(loop_calculate):
             k = self.vy / self.vx
-            b = self.y[-1] - self.x[-1] * self.vy / self.vx
+            b = self.y[-1] - self.x[-1] * k
+            temp_vx = self.vx
             #匀速直线运动部分（循环）
             while(True):
                 #速度方向垂直于y轴时
@@ -128,7 +129,7 @@ class billiaro_collision_square:
                 loop_calculate = False
             #记录Poincare section的数据
             if self.y[-1] * self.y[-2] < 0:
-                self.ps_vx.append(self.vx)
+                self.ps_vx.append(temp_vx)
                 self.ps_x.append(self.x[-2] + (self.x[-1] - self.x[-2]) * (0 - self.y[-2]) / (self.y[-1] - self.y[-2]))
     #画碰撞轨迹图
     def show_result(self):
