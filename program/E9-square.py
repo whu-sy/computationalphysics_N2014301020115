@@ -6,7 +6,7 @@ import pylab as pl
 
 class billiaro_collision_square:
     #初始化
-    def __init__(self, x = 0, y = 0, vx = 1.735, vy = 1, total_time = 100):
+    def __init__(self, x = 0, y = 0, vx = 1.735, vy = 1, total_time = 20):
         self.x = [x]
         self.y = [y]
         self.vx = vx
@@ -22,6 +22,8 @@ class billiaro_collision_square:
     def calculate(self):
         loop_calculate = True
         while(loop_calculate):
+            k = self.vy / self.vx
+            b = self.y[-1] - self.x[-1] * self.vy / self.vx
             #匀速直线运动部分（循环）
             while(True):
                 #速度方向垂直于y轴时
@@ -39,19 +41,19 @@ class billiaro_collision_square:
                 #速度方向在第一象限
                 if self.vx > 0 and self.vy >= 0:
                     #以小球位置与墙壁拐角处连线把第一象限分成两部分，速度在逆时针方向的前一半
-                    if self.vy / self.vx < (1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.y.append(self.vy / self.vx + self.y[-1] - self.x[-1] * self.vy / self.vx)
+                    if k < (1 - self.y[-1]) / (1 - self.x[-1]):
+                        self.y.append(k + b)
                         self.x.append(1)
                         self.vx = -self.vx
                         break
                     #以小球位置与墙壁拐角处连线把第一象限分成两部分，速度在逆时针方向的后一半
-                    if self.vy / self.vx > (1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append((1 - self.y[-1] + self.x[-1] * self.vy / self.vx) * self.vx / self.vy)
+                    if k > (1 - self.y[-1]) / (1 - self.x[-1]):
+                        self.x.append((1 - b) * self.vx / self.vy)
                         self.y.append(1)
                         self.vy = -self.vy
                         break
                     #速度与小球位置与墙壁拐角处连线的方向重合
-                    if self.vy / self.vx == (1 - self.y[-1]) / (1 - self.x[-1]):
+                    if k == (1 - self.y[-1]) / (1 - self.x[-1]):
                         self.x.append(1)
                         self.y.append(1)
                         self.vx = -self.vx
@@ -59,17 +61,17 @@ class billiaro_collision_square:
                         break
                 #速度方向在第二象限
                 if self.vx < 0 and self.vy >= 0:
-                    if self.vy / self.vx < (1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append((1 - self.y[-1] + self.x[-1] * self.vy / self.vx) * self.vx / self.vy)
+                    if k < (1 - self.y[-1]) / (-1 - self.x[-1]):
+                        self.x.append((1 - b) / k)
                         self.y.append(1)
                         self.vy = -self.vy
                         break
-                    if self.vy / self.vx > (1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.y.append(-self.vy / self.vx + self.y[-1] - self.x[-1] * self.vy / self.vx)
+                    if k > (1 - self.y[-1]) / (-1 - self.x[-1]):
+                        self.y.append(-k + b)
                         self.x.append(-1)
                         self.vx = -self.vx
                         break
-                    if self.vy / self.vx == (1 - self.y[-1]) / (-1 - self.x[-1]):
+                    if k == (1 - self.y[-1]) / (-1 - self.x[-1]):
                         self.x.append(-1)
                         self.y.append(1)
                         self.vx = -self.vx
@@ -77,17 +79,17 @@ class billiaro_collision_square:
                         break
                 #速度方向在第三象限
                 if self.vx < 0 and self.vy <= 0:
-                    if self.vy / self.vx < (-1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.y.append(-self.vy / self.vx + self.y[-1] - self.x[-1] * self.vy / self.vx)
+                    if k < (-1 - self.y[-1]) / (-1 - self.x[-1]):
+                        self.y.append(-k + b)
                         self.x.append(-1)
                         self.vx = -self.vx
                         break
-                    if self.vy / self.vx > (-1 - self.y[-1]) / (-1 - self.x[-1]):
-                        self.x.append((-1 - self.y[-1] + self.x[-1] * self.vy / self.vx) * self.vx / self.vy)
+                    if k > (-1 - self.y[-1]) / (-1 - self.x[-1]):
+                        self.x.append((-1 - b) / k)
                         self.y.append(-1)
                         self.vy = -self.vy
                         break
-                    if self.vy / self.vx == (-1 - self.y[-1]) / (-1 - self.x[-1]):
+                    if k == (-1 - self.y[-1]) / (-1 - self.x[-1]):
                         self.x.append(-1)
                         self.y.append(-1)
                         self.vx = -self.vx
@@ -95,17 +97,17 @@ class billiaro_collision_square:
                         break
                 #速度方向在第四象限
                 if self.vx > 0 and self.vy <= 0:
-                    if self.vy / self.vx < (-1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.x.append((-1 - self.y[-1] + self.x[-1] * self.vy / self.vx) * self.vx / self.vy)
+                    if k < (-1 - self.y[-1]) / (1 - self.x[-1]):
+                        self.x.append((-1 - b) / k)
                         self.y.append(-1)
                         self.vy = -self.vy
                         break
-                    if self.vy / self.vx > (-1 - self.y[-1]) / (1 - self.x[-1]):
-                        self.y.append(self.vy / self.vx + self.y[-1] - self.x[-1] * self.vy / self.vx)
+                    if k > (-1 - self.y[-1]) / (1 - self.x[-1]):
+                        self.y.append(k + b)
                         self.x.append(1)
                         self.vx = -self.vx
                         break
-                    if self.vy / self.vx == (-1 - self.y[-1]) / (1 - self.x[-1]):
+                    if k == (-1 - self.y[-1]) / (1 - self.x[-1]):
                         self.x.append(1)
                         self.y.append(-1)
                         self.vx = -self.vx
