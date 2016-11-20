@@ -4,7 +4,7 @@
 2014301020115   
 
 ## 作业   
- * [x] 练习一：准备工作   
+* [x] 练习一：准备工作   
 链接：[github](https://github.com/whu-sy/computationalphysics_N2014301020115/blob/master/reports/E1.md)   
 
 * [x] 练习二：初涉python   
@@ -28,5 +28,5 @@
 * [x] 练习八：单摆：我分叉了？！(P70 3.18-3.21/1)   
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/564525)
 
-* [ ] 练习九：小球：砰砰砰！(P88 3.30-3.32/1)   
+* [x] 练习九：小球：砰砰砰，我咋也混乱了！？(P88 3.30-3.32/1)   
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/572123)
