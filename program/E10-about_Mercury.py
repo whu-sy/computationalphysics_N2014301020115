@@ -52,7 +52,6 @@ class about_Mercury:
     #时间与进动角度关系图
     def show_result_theta_versus_time(self):
         for i in range(self.n):
-            
             self.theta.append(math.atan(self.p_y[i] / self.p_x[i]) / 2 / math.pi * 360)
         pl.title('Orbit orientation versus time', fontsize=20)
         pl.xlabel('time($yr$)', fontsize=20)
@@ -63,6 +62,7 @@ class about_Mercury:
         pl.plot(self.p_t, self.theta, 'ok')
         pl.plot([0, self.p_t[-1] * 1.05], [0, self.theta[-1] * 1.05], 'k')
         pl.show()
+        print(self.theta[-1] / self.p_t[-1])
     #进动率与相对论系数关系图
     def show_result_precession_rate_versus_alpha(self):
         self.alpha_1 = [0]
@@ -85,8 +85,8 @@ class about_Mercury:
         pl.show()
         
 
-start = about_Mercury(0.01, 1)
+start = about_Mercury(0.002, 2)
 start.calculate()
-start.show_result_precession()
-#start.show_result_theta_versus_time()
+#start.show_result_precession()
+start.show_result_theta_versus_time()
 #start.show_result_precession_rate_versus_alpha()
