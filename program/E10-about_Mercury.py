@@ -36,7 +36,7 @@ class about_Mercury:
                 self.p_y.append(self.y[-2])
                 self.p_t.append(self.t[-2])
                 self.n = self.n + 1
-    #进动图
+    #进动轨迹图
     def show_result_precession(self):
         pl.title('Simulation of the precession of Mercury', fontsize=20)
         pl.xlabel('x($AU$)', fontsize=20)
