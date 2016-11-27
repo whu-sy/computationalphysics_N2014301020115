@@ -17,6 +17,7 @@ class about_Mercury:
         self.total_time = total_time
         self.dt = 0.0001
         self.t = [0]
+        #远日点的相关参数初始化
         self.p_x = []
         self.p_y = []
         self.p_t = []
@@ -85,7 +86,7 @@ class about_Mercury:
         pl.show()
         
 
-start = about_Mercury(0.002, 2)
+start = about_Mercury(0.001, 2)
 start.calculate()
 #start.show_result_precession()
 start.show_result_theta_versus_time()
