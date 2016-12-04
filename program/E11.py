@@ -24,10 +24,10 @@ class Hyperion:
                               * (self.x[-1] * math.sin(self.theta[-1]) - self.y[-1] * math.cos(self.theta[-1]))
                               * (self.x[-1] * math.cos(self.theta[-1]) + self.y[-1] * math.sin(self.theta[-1])) * self.dt)
             self.theta.append(self.theta[-1] + self.omega[-1] * self.dt)
-            if self.theta[-1] < -math.pi:
-                self.theta[-1] = self.theta[-1] + 2 * math.pi
-            if self.theta[-1] > math.pi:
-                self.theta[-1] = self.theta[-1] - 2 * math.pi
+#            if self.theta[-1] < -math.pi:
+#                self.theta[-1] = self.theta[-1] + 2 * math.pi
+#            if self.theta[-1] > math.pi:
+#                self.theta[-1] = self.theta[-1] - 2 * math.pi
             self.vx = self.vx - self.C * self.x[-1] * self.dt / self.r[-1]**3
             self.x.append(self.x[-1] + self.vx * self.dt)
             self.vy = self.vy - self.C * self.y[-1] * self.dt / self.r[-1]**3
@@ -54,7 +54,7 @@ class Hyperion:
         pl.plot(self.t, self.omega)
         pl.xlim(0, self.total_time)
         pl.show()
-    def show_result_comparison(self, v = 2 * math.pi, t = 10):
+    def show_result_comparison(self, v = 2 * math.pi, t = 6):
         H_1 = Hyperion(0, v, t)
         H_1.calculate()
         H_2 = Hyperion(0.01, v, t)
@@ -64,6 +64,7 @@ class Hyperion:
         while(i < len(H_1.t)):
             dtheta.append(abs(H_1.theta[i] - H_2.theta[i]))
             i += 1
+        #指数回归部分
 #        Y = []
 #        lambda_Numerator = lambda_Denominator = 0
 #        for i0 in range(len(dtheta)):
@@ -84,15 +85,18 @@ class Hyperion:
         pl.xlabel('time(yr)', fontsize=20)
         pl.ylabel('$\\Delta\\theta$(radians)', fontsize=20)
         pl.semilogy(H_1.t, dtheta)
-        pl.plot([0, 0.7 * t], [dtheta[0] * 0.1, math.e**(00 * t * 0.7)], '--g')
+        lam = 3
+        pl.plot([0, 0.5 * t], [dtheta[0]*0.1, math.e**(lam * 0.5 * t)], '--g')
         pl.xlim(0, H_1.total_time)
+        pl.ylim(1e-6, 1e4)
+        pl.text(H_1.t[-1] * 0.7, dtheta[0] / 10, '$\\lambda\\approx%.1f$'%lam, fontsize=20)
+        pl.text(H_1.t[-1] * 0.7, dtheta[0] / 100, '$e=%.3f$'%H_1.e, fontsize=20)
+        pl.text(H_1.t[-1] * 0.7, dtheta[0] / 1000, '$v=%.1f$'%v, fontsize=20)
         pl.show()
-        
-        
-        
+
 #Hyperion(theta, v, total_time, r)
-start = Hyperion(0, 5, 1)
+start = Hyperion(0, 1)
 #start.calculate()
 #start.show_result_theta()
 #start.show_result_omega()
-start.show_result_comparison(5)
+start.show_result_comparison(2.5)
