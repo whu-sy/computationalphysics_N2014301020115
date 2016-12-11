@@ -38,4 +38,4 @@
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/589631)
 
 * [x] 练习十二：电荷：感受到我的王霸之气了吗？！(P143 5.1-5.10/1)   
-链接：[作业部落](https://www.baidu.com)
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/597728)
