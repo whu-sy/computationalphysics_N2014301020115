@@ -42,3 +42,8 @@
 
 * [x] 练习十三：弦：得儿~~~(P169-P173 6.9-6.17/1)   
 链接：[作业部落](https://www.zybuluo.com/whu-sy/note/605035)
+
+---
+
+* [x] 期末练习：Chapter7：向左走，向右走~   
+链接：[作业部落](https://www.zybuluo.com/whu-sy/note/625974)
